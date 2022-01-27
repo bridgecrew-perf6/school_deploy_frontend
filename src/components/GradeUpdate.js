@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Navigate } from "react-router-dom";
-import { fetchData, postData, API, getToken } from "../helper";
+import { fetchData, postData, API, getToken, deleteData } from "../helper";
 import Base from "./Base";
 
 export default function GradeUpdate() {
@@ -37,6 +37,7 @@ export default function GradeUpdate() {
     setMetaData({ ...metaData, loading: false });
     setValues({
       ...values,
+      _id: grade._id,
       gradeName: grade.gradeName,
       maxSectionSize: grade.maxSectionSize,
       admissionFees: grade.admissionFees,
@@ -111,11 +112,27 @@ export default function GradeUpdate() {
     }
   };
 
+  const handleDelete = async (event) => {
+    event.preventDefault();
+    setMetaData({ ...metaData, loading: true });
+
+    try {
+      const URL = API + `/grade/delete/${values._id}`;
+      const token = getToken();
+      const result = await deleteData(URL, token);
+      console.log(result);
+      setMetaData({ ...metaData, loading: false, didRedirect: true });
+    } catch (error) {
+      setMetaData({ ...metaData, loading: false, error: error });
+      console.log(error);
+    }
+  };
+
   const updateGradeForm = () => (
     <Base title="Grade Updation Form">
-      <div className="border border-success border-5 my-5 p-5 w-50 rounded">
+      <div className="border border-success border-5 my-5 p-md-5 w-sm-100 w-md-75 w-lg-50 rounded">
         <div className="container d-flex flex-column">
-          <form onSubmit={handleSubmit}>
+          <form>
             <div className="row mb-3">
               <label htmlFor="gradeName" className="col-sm-3 col-form-label">
                 Grade Name
@@ -372,9 +389,20 @@ export default function GradeUpdate() {
               </div>
             </div>
 
-            <div className="d-flex flex-column align-items-center">
-              <button type="submit" className="btn btn-success btn-lg w-75">
+            <div className="d-flex justify-content-center align-items-center">
+              <button
+                type="submit"
+                onClick={handleSubmit}
+                className="btn m-2 btn-success btn-lg"
+              >
                 Update
+              </button>
+              <button
+                type="submit"
+                onClick={handleDelete}
+                className="btn m-2 btn-danger btn-lg"
+              >
+                Delete
               </button>
             </div>
           </form>

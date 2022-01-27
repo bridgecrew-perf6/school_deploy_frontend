@@ -123,7 +123,7 @@ export default function AddGrade() {
   };
 
   const createGradeForm = () => (
-    <div className="border border-success border-5 my-5 p-5 w-50 rounded">
+    <div className="border border-success border-5 my-5 p-md-5 w-sm-100 w-md-75 w-lg-50 rounded">
       <div className="container d-flex flex-column">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="row mb-3">
@@ -407,7 +407,7 @@ export default function AddGrade() {
           </div>
 
           <div className="d-flex flex-column align-items-center">
-            <button type="submit" className="btn btn-success btn-lg w-75">
+            <button type="submit" className="btn btn-success btn-lg mb-2">
               Create
             </button>
           </div>

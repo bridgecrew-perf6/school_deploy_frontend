@@ -35,16 +35,18 @@ export default function AllGrades() {
 
   return (
     <Base title="Grades List">
-      <table className="table text-white">
-        <thead>
-          <tr>
-            <th scope="col">Row</th>
-            <th scope="col">Grade Name</th>
-            <th scope="col">Edit Info</th>
-          </tr>
-        </thead>
-        <tbody>{contructTableBody()}</tbody>
-      </table>
+      <div className="scroll">
+        <table className="table table-bordered border-success text-white">
+          <thead>
+            <tr>
+              <th scope="col">Row</th>
+              <th scope="col">Grade Name</th>
+              <th scope="col">Edit Info</th>
+            </tr>
+          </thead>
+          <tbody>{contructTableBody()}</tbody>
+        </table>
+      </div>
     </Base>
   );
 }

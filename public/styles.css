@@ -1,0 +1,20 @@
+@media screen and (max-width: 500px) {
+  .user {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .ops {
+    width: 100%;
+    margin-top: 10px;
+  }
+  .info {
+    width: 100%;
+  }
+}
+
+.scroll {
+  width: 90%;
+  overflow-x: scroll;
+}
+
+/* D:\myfiles\CSS\flipkart_clone\css */

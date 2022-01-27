@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { fetchData, postData, API, getToken } from "../helper";
+import { fetchData, postData, API, getToken, deleteData } from "../helper";
 import { useParams, Navigate } from "react-router-dom";
 import Base from "./Base";
 
@@ -76,6 +76,7 @@ export default function StudentUpdate() {
   const { registrationNumber } = useParams();
   const [grades, setGrades] = useState([]);
   const [values, setValues] = useState({
+    _id: "",
     studentName: "",
     fatherName: "",
     motherName: "",
@@ -138,6 +139,7 @@ export default function StudentUpdate() {
       const data = await fetchData(URL, token);
       setValues({
         ...values,
+        _id: data._id,
         studentName: data.studentName,
         fatherName: data.fatherName,
         motherName: data.motherName,
@@ -269,6 +271,22 @@ export default function StudentUpdate() {
     }
   };
 
+  const handleDelete = async (event) => {
+    event.preventDefault();
+    setMetaData({ ...metaData, loading: true });
+
+    try {
+      const URL = API + `/student/delete/${values._id}`;
+      const token = getToken();
+      const result = await deleteData(URL, token);
+      console.log(result);
+      setMetaData({ ...metaData, loading: false, didRedirect: true });
+    } catch (error) {
+      setMetaData({ ...metaData, loading: false, error: error });
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchGrades();
     fetchStudent();
@@ -281,7 +299,7 @@ export default function StudentUpdate() {
         key={imageUrl}
         src={imageUrl}
         alt=""
-        style={{ height: 300, width: 300 }}
+        style={{ width: "150px", marginBottom: "5px" }}
       />
       // eslint-disable-next-line
     );
@@ -303,14 +321,9 @@ export default function StudentUpdate() {
 
   const StudentUpdateForm = () => (
     <Base title="Student Info Update">
-      <div className="border border-success border-5 my-5 p-5 w-50 rounded">
+      <div className="border border-success border-5 my-5 p-md-5 w-sm-100 w-md-75 w-lg-50 rounded">
         <div className="container d-flex flex-column">
-          <form
-            action="/admitStudent"
-            method="POST"
-            encType="multipart/form-data"
-            onSubmit={handleSubmit}
-          >
+          <form>
             <div className="row mb-3">
               <label htmlFor="studentName" className="col-sm-3 col-form-label">
                 Student Name
@@ -806,9 +819,20 @@ export default function StudentUpdate() {
                 />
               </div>
             </div>
-            <div className="d-flex flex-column align-items-center">
-              <button type="submit" className="btn btn-success btn-lg w-50">
+            <div className="d-flex justify-content-center align-items-center">
+              <button
+                type="submit"
+                onClick={handleSubmit}
+                className="btn m-2 btn-success btn-lg"
+              >
                 Update
+              </button>
+              <button
+                type="submit"
+                onClick={handleDelete}
+                className="btn m-2 btn-danger btn-lg"
+              >
+                Delete
               </button>
             </div>
           </form>
@@ -824,18 +848,3 @@ export default function StudentUpdate() {
     </>
   );
 }
-
-/*
-const imageList = () => (
-    <div className="border border-danger border-5 my-5 p-5 w-100 rounded">
-      <div className="row">
-        {renderImage(imageFields.fatherPhoto)}
-        {renderImage(imageFields.termCert)}
-        {renderImage(imageFields.charCert)}
-        {renderImage(imageFields.childPhoto)}
-        {renderImage(imageFields.motherPhoto)}
-      </div>
-    </div>
-  );
-
-*/

@@ -39,27 +39,29 @@ export default function FeeStructure() {
 
   const feeStructureTable = () => (
     <Base title="Fees Structures">
-      <table className="table text-white">
-        <thead>
-          <tr>
-            <th scope="col">Row</th>
-            <th scope="col">Grade Name</th>
-            <th scope="col">Admission Fees</th>
-            <th scope="col">Tution Fees</th>
-            <th scope="col">Late Payment Fine</th>
-            <th scope="col">Furniture Fees</th>
-            <th scope="col">Conveyance Charges</th>
-            <th scope="col">Development Fees</th>
-            <th scope="col">Computer Fees</th>
-            <th scope="col">Minimum Transport Fees</th>
-            <th scope="col">Base Distance</th>
-            <th scope="col">Offset Transport Fees</th>
-            <th scope="col">Offset Distance</th>
-            <th scope="col">Fixed Monthly Fees</th>
-          </tr>
-        </thead>
-        <tbody>{contructTableBody()}</tbody>
-      </table>
+      <div className="scroll">
+        <table className="table table-bordered border-success text-white">
+          <thead>
+            <tr>
+              <th scope="col">Row</th>
+              <th scope="col">Grade Name</th>
+              <th scope="col">Admission Fees</th>
+              <th scope="col">Tution Fees</th>
+              <th scope="col">Late Payment Fine</th>
+              <th scope="col">Furniture Fees</th>
+              <th scope="col">Conveyance Charges</th>
+              <th scope="col">Development Fees</th>
+              <th scope="col">Computer Fees</th>
+              <th scope="col">Minimum Transport Fees</th>
+              <th scope="col">Base Distance</th>
+              <th scope="col">Offset Transport Fees</th>
+              <th scope="col">Offset Distance</th>
+              <th scope="col">Fixed Monthly Fees</th>
+            </tr>
+          </thead>
+          <tbody>{contructTableBody()}</tbody>
+        </table>
+      </div>
     </Base>
   );
 

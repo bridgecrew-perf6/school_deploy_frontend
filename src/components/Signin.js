@@ -56,7 +56,7 @@ export default function Signin() {
   };
 
   const signinForm = () => (
-    <div className="border border-success border-5 my-5 p-5 w-50 rounded">
+    <div className="border border-success border-5 my-5 p-md-5 w-sm-100 w-md-75 w-lg-50 rounded">
       <div className="container d-flex flex-column">
         {values.error && (
           <div
@@ -108,8 +108,8 @@ export default function Signin() {
               />
             </div>
           </div>
-          <div className="d-flex flex-column align-items-center">
-            <button type="submit" className="btn btn-success w-25">
+          <div className="d-flex flex-column align-items-center mb-2">
+            <button type="submit" className="btn btn-success">
               Login
             </button>
           </div>

@@ -27,6 +27,7 @@ import { getToken, isSignedIn, ROLES } from "./helper";
 // import Home from "./components/Home";
 import Auth from "./context/auth";
 import Test from "./components/Test";
+import TeacherUpdate from "./components/TeacherUpdate";
 
 function PrivateRoute({ children }) {
   const auth = getToken();
@@ -101,6 +102,14 @@ export default function AppRoutes() {
             element={
               <PrivateRoute>
                 <AllTeachers />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/teacher/:teacherId"
+            element={
+              <PrivateRoute>
+                <TeacherUpdate />
               </PrivateRoute>
             }
           />

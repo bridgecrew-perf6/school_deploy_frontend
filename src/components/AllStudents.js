@@ -36,19 +36,21 @@ export default function AllStudents() {
   }
 
   const createStudentList = () => (
-    <table className="table text-white">
-      <thead>
-        <tr>
-          <th scope="col">Row</th>
-          <th scope="col">Registration Number</th>
-          <th scope="col">Name</th>
-          <th scope="col">Class</th>
-          <th scope="col">Date Of Admission</th>
-          <th scope="col">Edit Info</th>
-        </tr>
-      </thead>
-      <tbody>{contructTableBody()}</tbody>
-    </table>
+    <div className="scroll">
+      <table className="table table-bordered border-success text-white">
+        <thead>
+          <tr>
+            <th scope="col">Row</th>
+            <th scope="col">Registration Number</th>
+            <th scope="col">Name</th>
+            <th scope="col">Class</th>
+            <th scope="col">Date Of Admission</th>
+            <th scope="col">Edit Info</th>
+          </tr>
+        </thead>
+        <tbody>{contructTableBody()}</tbody>
+      </table>
+    </div>
   );
 
   return <Base title="Students List">{createStudentList()}</Base>;

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
-import { API, getToken, postData } from "../helper";
+import React, { useEffect, useState } from "react";
+import { Navigate, useParams } from "react-router-dom";
+import { API, getToken, postData, fetchData, deleteData } from "../helper";
 import Base from "./Base";
 
-export default function HireTeacher() {
+export default function TeacherUpdate() {
+  const { teacherId } = useParams();
   const [values, setValues] = useState({
     uname: "",
     email: "",
@@ -18,6 +19,32 @@ export default function HireTeacher() {
     loading: false,
     error: "",
   });
+
+  async function fetchTeacher() {
+    setMetaData({ ...metaData, loading: true });
+    const URL = API + `/teacher/${teacherId}`;
+    const token = getToken();
+    const { user: teacher } = await fetchData(URL, token);
+    console.log(teacher);
+    try {
+      setValues({
+        ...values,
+        uname: teacher.uname,
+        email: teacher.email,
+        contactNumber: teacher.contactNumber,
+        aadharNum: teacher.aadharNum,
+        salary: teacher.salary,
+      });
+      setMetaData({ ...metaData, loading: false });
+    } catch (error) {
+      console.log(error);
+      setMetaData({ ...metaData, loading: false, error });
+    }
+  }
+
+  useEffect(() => {
+    fetchTeacher();
+  }, []);
 
   const handleChange = (propName) => (event) => {
     if (event.target.files === null) {
@@ -42,7 +69,7 @@ export default function HireTeacher() {
         }
       }
 
-      const URL = API + "/hireTeacher";
+      const URL = API + `/teacher/${teacherId}`;
 
       const token = getToken();
 
@@ -63,8 +90,24 @@ export default function HireTeacher() {
     }
   };
 
-  const HireTeacherForm = () => (
-    <Base title="Hire Teacher Form">
+  const handleDelete = async (event) => {
+    event.preventDefault();
+    setMetaData({ ...metaData, loading: true });
+
+    try {
+      const URL = API + `/teacher/${teacherId}`;
+      const token = getToken();
+      const result = await deleteData(URL, token);
+      console.log(result);
+      setMetaData({ ...metaData, loading: false, didRedirect: true });
+    } catch (error) {
+      setMetaData({ ...metaData, loading: false, error: error });
+      console.log(error);
+    }
+  };
+
+  const UpdateTeacherForm = () => (
+    <Base title="Update Teacher Info">
       <div className="border border-success border-5 my-5 p-md-5 w-sm-100 w-md-75 w-lg-50 rounded">
         <div className="container d-flex flex-column">
           <form onSubmit={handleSubmit}>
@@ -111,6 +154,7 @@ export default function HireTeacher() {
                   id="password"
                   value={values.password}
                   onChange={handleChange("password")}
+                  required
                 />
               </div>
             </div>
@@ -165,9 +209,16 @@ export default function HireTeacher() {
               </div>
             </div>
 
-            <div className="d-flex flex-column align-items-center">
-              <button type="submit" className="btn btn-success btn-lg mb-2">
-                Hire
+            <div className="d-flex justify-content-center align-items-center">
+              <button type="submit" className="btn m-2 btn-success btn-lg">
+                Update
+              </button>
+              <button
+                type="button"
+                onClick={handleDelete}
+                className="btn m-2 btn-danger btn-lg"
+              >
+                Delete
               </button>
             </div>
           </form>
@@ -185,7 +236,7 @@ export default function HireTeacher() {
   return (
     <>
       {performRedirect()}
-      {HireTeacherForm()}
+      {UpdateTeacherForm()}
     </>
   );
 }

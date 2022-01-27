@@ -71,9 +71,12 @@ export default function Admin() {
   );
 
   const adminPage = () => (
-    <div style={{ backgroundColor: "#2ecc72" }} className="container row p-3">
-      <div className="col-3">{adminLeftSide()}</div>
-      <div className="col-9">{adminRightSide()}</div>
+    <div
+      style={{ backgroundColor: "#2ecc72" }}
+      className="user container row p-3"
+    >
+      <div className="ops col-3">{adminLeftSide()}</div>
+      <div className="info col-9">{adminRightSide()}</div>
     </div>
   );
   return (

@@ -133,6 +133,24 @@ export const checkAtleast3Years = (dob) => {
   return age >= 3;
 };
 
+export const deleteData = async (URL, token) => {
+  const options = {
+    method: "DELETE", // *GET, POST, PUT, DELETE, etc.
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    const result = await fetch(URL, options);
+    const data = await result.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 /*
 
 function AppUtil() {
